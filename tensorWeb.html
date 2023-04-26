@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"></script> 
+        <script>
+           var tensor = tf.tensor([1.1, 2.2, 3.3], null, 'float32')
+           console.log(tensor);
+           tensor.print();
+        
+           console.log("*************************");
+        
+           var tensor2 = tf.tensor([[1,2],[3,4]]);
+           console.log(tensor2);
+           tensor2.print();
+        
+        
+        
+           console.log("Paso valores en linea y que tensor genere segpun la forma, con valores enteros");
+        
+           var tensor2 = tf.tensor([1,2,3,4,5,6],[2,3],"int32");
+           console.log(tensor2);
+           tensor2.print();
+        
+           console.log("Pasando matriz como parámetro");
+           matriz =[[[1,2,3],[4,5,6],[7,8,9]],[[10,11,12],[13,14,15],[16,17,18]]];
+        
+           var tensor2 = tf.tensor(matriz);
+           console.log(tensor2);
+           tensor2.print();
+        
+           var tensor = tf.tensor([1.1, 2.2, 3.3])
+           console.log(tensor);
+        
+           var tensor = tf.tensor(1, null, 'float32')
+           console.log(tensor);
+        
+        
+        
+        
+        
+           console.log("***********************");
+        
+           var tensor = tf.tensor2d([[1.1, 2.2],[3.3,0]])
+           console.log(tensor);
+           tensor.print();
+        
+        
+        
+        
+        
+           console.log("Ver que son asincrónico asincronico");
+           var tensor = tf.tensor([1, 2,3,0],[2,2],"int32")
+           console.log(tensor);
+           console.log("antes");
+           tensor.array().then(array => console.log(array));
+           console.log("despues");
+           tensor.print();
+        
+        
+        
+        
+           console.log("MEMORIA");
+        
+           console.log("Cantidad de Bytes: "+ tf.memory().numBytes);
+           console.log("Cantidad de tensores: "+ tf.memory().numTensors);
+           console.log("Buffer de datos generados: "+ tf.memory().numDataBuffers);
+           console.log("Memoria de GPU: "+tf.memory().numBytesInGPU);
+        
+        </script>
+</body>
+</html>
