@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Actividad con TensorFlow.js y Canvas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.10.1/dist/tf.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      // Obtén el elemento canvas
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Dibuja el cuadrado con bordes laterales más gruesos
+      ctx.lineWidth = 5;
+      ctx.strokeRect(50, 50, 300, 300);
+
+      // Dibuja una línea adicional para el borde derecho
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      //coordenadas x, y
+      ctx.moveTo(350, 50); // Punto inicial del borde derecho
+      ctx.lineTo(350, 350); // Punto final del borde derecho
+      ctx.stroke();
+
+      ctx.strokeStyle = "blue";
+      ctx.lineWidth= 10
+      ctx.beginPath();
+      //coordenadas x, y
+      ctx.moveTo(50, 350); // Punto inicial del borde derecho
+      ctx.lineTo(50, 50); // Punto final del borde derecho
+      ctx.stroke();
+
+
+      // Dibuja un cuadrado con pixeles RGB aleatorios en la esquina superior derecha
+      const randomColor = [
+        Math.random() * 255,
+        Math.random() * 255,
+        Math.random() * 255,
+      ];
+      ctx.fillStyle = `rgb(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]})`;
+      ctx.fillRect(300, 50, 50, 50);
+
+      // Dibuja un cuadrado en la esquina inferior derecha
+      ctx.fillStyle = "yellow";
+      //fillRect(x, y, ancho, alto);
+      ctx.fillRect(50, 300, 50, 50);
+
+      // Dibuja un círculo en las esquinas restantes
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      //.arc(x, y, radio, inicioAngulo, finAngulo, sentidoHorario);
+      ctx.arc(300, 300, 25, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = "blue";
+      ctx.beginPath();
+      ctx.arc(400, 100, 25, 0, 2 * Math.PI);
+      ctx.fill();
+    </script>
+  </body>
+</html>

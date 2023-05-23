@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bandera de Suiza con TensorFlow.js</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.12.0"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+      const width = 400;
+      const height = 200;
+
+      const canvas = document.getElementById("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+
+      const red = [255, 0, 0];
+      const pixelData = new Uint8Array(width * height * 4); // Crear un arreglo para los datos de los píxeles
+
+      // Llenar el arreglo con el color rojo para todos los píxeles
+      for (let i = 0; i < pixelData.length; i += 4) {
+        pixelData[i] = red[0]; // R
+        pixelData[i + 1] = red[1]; // G
+        pixelData[i + 2] = red[2]; // B
+        pixelData[i + 3] = 255; // Alpha (255 para opaco)
+      }
+
+      
+
+      // Crear un tensor a partir del arreglo de datos de los píxeles
+      const tensor = tf.tensor3d(pixelData, [height, width, 4], "int32");
+
+      tf.browser.toPixels(tensor, canvas).then(() => {
+        console.log("Bandera de Suiza generada con éxito");
+      });
+    </script>
+  </body>
+</html>
