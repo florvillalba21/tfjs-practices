@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bandera de Suiza con TensorFlow.js</title>
+    <title>Bandera de Suiza con TensorFlow.js y Canvas</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.12.0"></script>
@@ -18,23 +18,23 @@
       canvas.height = height;
       const ctx = canvas.getContext("2d");
 
-      const red = [255, 0, 0];
-      const pixelData = new Uint8Array(width * height * 4); // Crear un arreglo para los datos de los píxeles
+      const red = tf.tensor1d([255, 0, 0]);
+      const white = tf.tensor1d([255, 255, 255]);
 
-      // Llenar el arreglo con el color rojo para todos los píxeles
-      for (let i = 0; i < pixelData.length; i += 4) {
-        pixelData[i] = red[0]; // R
-        pixelData[i + 1] = red[1]; // G
-        pixelData[i + 2] = red[2]; // B
-        pixelData[i + 3] = 255; // Alpha (255 para opaco)
-      }
+      const tensorData = tf.tidy(() => {
+        const tensor = tf.fill([height, width, 3], 0); // Tensor inicialmente lleno de ceros
 
-      
+        const stripeWidth = Math.floor(width / 32);
+        const stripeStart = Math.floor((width - stripeWidth) / 2);
+        const stripeSlice = tf.slice(tensor, [0, stripeStart, 0], [height, stripeWidth, 3]);
+        const stripeColor = tf.where(tf.logicalOr(tf.equal(tf.range(0, height), 0), tf.equal(tf.range(0, height), height - 1)), white, red);
+        tensor.scatterUpdate([tf.range(0, height), tf.range(stripeStart, stripeStart + stripeWidth), tf.zeros([height], 'int32')], stripeColor);
 
-      // Crear un tensor a partir del arreglo de datos de los píxeles
-      const tensor = tf.tensor3d(pixelData, [height, width, 4], "int32");
+        return tensor;
+      });
 
-      tf.browser.toPixels(tensor, canvas).then(() => {
+      tf.browser.toPixels(tensorData, canvas).then(() => {
+        tensorData.dispose();
         console.log("Bandera de Suiza generada con éxito");
       });
     </script>

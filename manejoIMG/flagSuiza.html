@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+    <!--        <script src="newjavascript.js" type="text/javascript"></script>-->
+  </head>
+  <body>
+    <canvas id="cuadrado"></canvas>
+
+    <script>
+      const redColor = [255, 0, 0];
+      const whiteColor = [255, 255, 255];
+
+      const width = 400;
+      const height = 200;
+
+      //   const cuadradoGrande = cuadrado.tile([200, 200, 1]);
+      const canvasCuadrado1 = document.getElementById("cuadrado");
+      canvasCuadrado1.width = width;
+      canvasCuadrado1.height = height;
+      const ctx = canvasCuadrado1.getContext("2d");
+
+
+      const pixelMatrix = [];
+      const pixelCruz = [];
+
+
+      for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+          if (y >= 40 && y <= 160 && x >= 175 && x <= 225) {
+            row.push(whiteColor);
+          } else if (y >= 75 && y <= 120 && x >= 125 && x <= 275) {
+            row.push(whiteColor);
+          } else {
+            row.push(redColor);
+          }
+        }
+        pixelMatrix.push(row);
+      }
+
+      const pixels = tf.tensor(pixelMatrix, [height, width, 3], "int32");
+
+
+      tf.browser.toPixels(pixels, canvasCuadrado1).then(() => {
+        pixels.dispose();
+        console.log(tf.memory().numBytes);
+      });
+    </script>
+  </body>
+</html>
